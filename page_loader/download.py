@@ -16,27 +16,25 @@ def download(url: str, path: str) -> str:
         print('Success!')
 
     if checking_the_directory(path):
-
-
         write_text = response.text
-        
         filepath = os.path.join(path, generate_name_file(url))
-
         creating_file_with_content(filepath, write_text)
-
     return filepath
 
+
 def generate_name_file(url: str) -> str:
-    del_http = re.sub('(https?:\/\/)','', url)
-    del_simvol = re.sub('[^\w^\d]', '-', del_http)
+    del_http = re.sub('(https?:\/\/)', '', url)  # noqa: W605
+    del_simvol = re.sub('[^\w^\d]', '-', del_http)  # noqa: W605
     result = del_simvol + '.html'
     return result
 
+
 def checking_the_directory(path: str) -> bool:
-    if os.path.isdir(str(path)) == False:
+    if os.path.isdir(str(path)) is not True:
         print(f"there is no directory for this {str(path)}")
         return False
     return True
+
 
 def creating_file_with_content(filepath: str, write_text: str) -> None:
     with open(filepath, 'w') as file:
