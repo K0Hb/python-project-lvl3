@@ -1,0 +1,39 @@
+name: Linter and tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [3.8, 3.9]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: updating dpendencies and do linter and test check
+      run: |
+        pip install poetry
+        make install
+    - name: Lint with flake8
+      run: |
+        make lint
+    - name: Test with pytest
+      run: |
+        poetry run pytest
+    - name: Coverage report for CodeClimate
+      uses: paambaati/codeclimate-action@v2.7.5
+      env:
+        CC_TEST_REPORTER_ID: ${{ secrets.CODE_CLIMAT_ID }}
+      with:
+        coverageCommand: make coverage
