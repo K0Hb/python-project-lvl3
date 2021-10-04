@@ -6,10 +6,24 @@ from progress.bar import IncrementalBar
 import magic
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
+from page_loader.args_parser import DEBUG, INFO, WARNING, ERROR, CRITICAL
 
 
 class KnownError(Exception):
     pass
+
+
+def set_level(level_logging):
+    dict_of_level = {DEBUG: logging.DEBUG,
+                     WARNING: logging.WARNING,
+                     ERROR: logging.ERROR,
+                     CRITICAL: logging.CRITICAL,
+                     INFO: logging.INFO,
+                     }
+    return logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s',
+                               filename='my.log',
+                               filemode='w',
+                               level=dict_of_level[level_logging])
 
 
 def download(url: str, path: str) -> tuple:
