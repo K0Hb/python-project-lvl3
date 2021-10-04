@@ -86,7 +86,7 @@ def saved(changed_page: str, path_to_page: list, mode='w') -> None:
         raise KnownError('Your folder is incorrect') from e
 
 
-def load_page(link: str) -> None:
+def load_page(link: str) -> str:
     logging.info('Loading page')
     try:
         page = requests.get(link)
