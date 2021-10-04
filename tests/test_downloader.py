@@ -10,8 +10,8 @@ def test_downloader():
     with tempfile.TemporaryDirectory() as tmp:   
         path_dir = pathlib.Path(tmp)
         path_page, path_to_folder = download('http://milk.com/' , path_dir)[2:]
-        assert_path_to_page = re.fullmatch('\/tmp\/...........\/milk-com.html', path_page)
-        assert_path_to_folder = re.fullmatch('\/tmp\/...........\/milk-com_files', path_to_folder)
+        assert_path_to_page = re.fullmatch(r'/tmp/.........../milk-com.html', path_page)
+        assert_path_to_folder = re.fullmatch(r'/tmp/.........../milk-com_files', path_to_folder)
         assert path_page == assert_path_to_page.group(0)
         assert path_to_folder == assert_path_to_folder.group(0)
 
@@ -34,9 +34,35 @@ def test_connection_failed():
             download('http://httpbin.org/status/404', temp)
         assert 'Connection failed' in str(e_info.value)
 
+
 def test_load_files():
     with tempfile.TemporaryDirectory() as temp:
         link_for_test = 'https://github.com/K0Hb/python-project-lvl3'
         path = os.path.join(temp, generate_name(link_for_test, 'file'))
         load_files([(link_for_test, path)])
         assert os.path.isfile(path)
+
+
+def test_error_no_schema():
+    with pytest.raises(KnownError) as e_info:
+        download('K0Hb.github.io/github.io/', '/fantom_path/')
+    assert 'Wrong address!' in str(e_info.value)
+
+
+def test_error_invalid_schema():
+    with pytest.raises(KnownError) as e_info:
+        download('ht://K0Hb.github.io/github.io/', '/fantom_path/')
+    assert 'Wrong address!' in str(e_info.value)
+
+
+def test_error_200():
+    with pytest.raises(KnownError) as e_info:
+        download('http://httpbin.org/status/404', '/fantom_path/')
+    assert 'Connection failed' in str(e_info.value)
+
+
+def test_error_umreal_folder():
+    with pytest.raises(KnownError) as e_info:
+        download('https://github.com/K0Hb/python-project-lvl3', 'unreal_path_to_file')
+    assert 'Your folder is incorrect' in str(e_info.value)
+
