@@ -7,16 +7,24 @@ import sys
 
 def main() -> None:
     namespace = args_parser()
-    modification_level(namespace.level)
     url = namespace.URL
     path = namespace.output
+    level_log = namespace.level
+    modification_level(level_log)
     try:
-        download(url, path)
-    except KnownError as e:
-        cause = e.__cause__
-        exc_info = (cause.__class__, cause, cause.__traceback__)
-        logging.error(str(e), exc_info=exc_info)
+        file_path = download(url, path)
+        print(f'Page saved in {file_path}')
+    except KnownError :
+        logging.error('Error')
         sys.exit(1)
+    except PermissionError:
+        logging.error('Not enough access rights')
+        sys.exit(1)
+    except FileNotFoundError:
+        logging.error('No such file or directory')
+        sys.exit(1)
+    else:
+        sys.exit(0)
 
 
 if __name__ == '__main__':

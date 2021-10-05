@@ -26,7 +26,7 @@ def modification_level(level_logging: str) -> None:
                                level=dict_of_level[level_logging])
 
 
-def download(url, path) -> tuple:
+def download(url: str, path: str) -> tuple:
 
     page = load_page(url)
 
@@ -44,7 +44,7 @@ def download(url, path) -> tuple:
 
     load_files(source_of_files)
 
-    return name_of_page, name_of_folder, path_to_page, path_to_folder
+    return path_to_page
 
 
 def generate_name(url: str, status=None) -> str:
