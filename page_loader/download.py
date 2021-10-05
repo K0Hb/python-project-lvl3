@@ -13,7 +13,7 @@ class KnownError(Exception):
     pass
 
 
-def modification_level(level_logging) -> None:
+def modification_level(level_logging: str) -> None:
     dict_of_level = {DEBUG: logging.DEBUG,
                      WARNING: logging.WARNING,
                      ERROR: logging.ERROR,
@@ -26,7 +26,7 @@ def modification_level(level_logging) -> None:
                                level=dict_of_level[level_logging])
 
 
-def download(url, path):
+def download(url: str, path: str) -> tuple:
 
     page = load_page(url)
 
@@ -47,7 +47,7 @@ def download(url, path):
     return path_to_page
 
 
-def generate_name(url, status=None) -> str:
+def generate_name(url: str, status=None) -> str:
     logging.info('Сreating a name')
     link = url.rstrip('/')
     o = urlparse(link)
@@ -69,7 +69,7 @@ def generate_name(url, status=None) -> str:
     return final_name
 
 
-def checking_the_directory(path) -> None:
+def checking_the_directory(path: str) -> None:
     logging.info('Сhecking the directory')
     if not os.path.exists(path):
         try:
@@ -78,7 +78,7 @@ def checking_the_directory(path) -> None:
             raise KnownError('Your folder is incorrect') from e
 
 
-def saved(changed_page, path_to_page, mode='w') -> None:
+def saved(changed_page: str and bytes, path_to_page: str, mode='w') -> None:
     logging.info('Saving page')
     try:
         with open(path_to_page, mode) as file:
@@ -87,7 +87,7 @@ def saved(changed_page, path_to_page, mode='w') -> None:
         raise KnownError('Your folder is incorrect') from e
 
 
-def load_page(link) -> str:
+def load_page(link: str) -> str:
     logging.info('Loading page')
     try:
         page = requests.get(link)
@@ -102,7 +102,7 @@ def load_page(link) -> str:
     return page.text
 
 
-def load_files(source) -> None:
+def load_files(source: list) -> None:
     logging.info('Loading links')
     bar = IncrementalBar('Loading links', max=len(source))
     for link, path_to_extra_file in source:
