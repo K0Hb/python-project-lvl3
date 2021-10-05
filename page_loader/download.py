@@ -1,9 +1,10 @@
+#!/usr/bin/env python3
 import requests
 import os
 import re
 import logging
-from progress.bar import IncrementalBar
 import magic
+from progress.bar import IncrementalBar
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 from page_loader.args_parser import DEBUG, INFO, WARNING, ERROR, CRITICAL
@@ -48,6 +49,7 @@ def download(url: str, path: str) -> tuple:
 
 
 def generate_name(url: str, status=None) -> str:
+    logging.info('Сreating a name')
     link = url.rstrip('/')
     o = urlparse(link)
     name = o.netloc + o.path
