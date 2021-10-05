@@ -12,8 +12,9 @@ def main() -> None:
     level_log = namespace.level
     modification_level(level_log)
     try:
-        file_path = download(url, path)
+        file_path, path_to_folder = download(url, path)
         print(f'Page saved in {file_path}')
+        print(f'Resources saved in {path_to_folder}')
     except KnownError:
         logging.error('Error')
         sys.exit(1)

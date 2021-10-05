@@ -44,7 +44,7 @@ def download(url: str, path: str) -> tuple:
 
     load_files(source_of_files)
 
-    return path_to_page
+    return path_to_page, path_to_folder
 
 
 def generate_name(url: str, status=None) -> str:
