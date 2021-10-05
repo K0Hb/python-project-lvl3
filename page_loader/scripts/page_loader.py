@@ -14,7 +14,7 @@ def main() -> None:
     try:
         file_path = download(url, path)
         print(f'Page saved in {file_path}')
-    except KnownError :
+    except KnownError:
         logging.error('Error')
         sys.exit(1)
     except PermissionError:
