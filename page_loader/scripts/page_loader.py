@@ -8,8 +8,10 @@ import sys
 def main() -> None:
     namespace = args_parser()
     modification_level(namespace.level)
+    url = namespace.URL
+    path = namespace.output
     try:
-        download(namespace.URL, namespace.output)
+        download(url, path)
     except KnownError as e:
         cause = e.__cause__
         exc_info = (cause.__class__, cause, cause.__traceback__)
