@@ -3,7 +3,6 @@ import requests
 import os
 import re
 import logging
-import magic
 from progress.bar import IncrementalBar
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
@@ -79,7 +78,7 @@ def checking_the_directory(path: str) -> None:
             raise KnownError('Your folder is incorrect') from e
 
 
-def saved(changed_page: str, path_to_page: list, mode='w') -> None:
+def saved(changed_page: str and bytes, path_to_page: str, mode='w') -> None:
     logging.info('Saving page')
     try:
         with open(path_to_page, mode) as file:
@@ -114,12 +113,8 @@ def load_files(source: list) -> None:
             raise KnownError('Connection failed') from e
         except requests.exceptions.ConnectionError as e:
             raise KnownError('Connection error') from e
-        text_types = {'text/html', 'text/css', 'text/javascript'}
-        mime_type = magic.from_buffer(r.content, mime=True)
-        mode, data = ('w', r.text) if mime_type in text_types \
-            else ('wb', r.content)
-        with open(path_to_extra_file, mode) as f:
-            f.write(data)
+        data = r.content
+        saved(data, path_to_extra_file, mode='wb')
         bar.next()
     bar.finish()
 
