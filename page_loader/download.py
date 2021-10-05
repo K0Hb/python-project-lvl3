@@ -13,7 +13,7 @@ class KnownError(Exception):
     pass
 
 
-def set_level(level_logging):
+def modification_level(level_logging: str) -> None:
     dict_of_level = {DEBUG: logging.DEBUG,
                      WARNING: logging.WARNING,
                      ERROR: logging.ERROR,

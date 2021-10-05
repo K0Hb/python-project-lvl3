@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-from page_loader.download import download, set_level, KnownError
+from page_loader.download import download, modification_level, KnownError
 from page_loader.args_parser import args_parser
 import logging
 import sys
 
 
-def main():
+def main() -> None:
     namespace = args_parser()
-    set_level(namespace.level)
+    modification_level(namespace.level)
     try:
         download(namespace.URL, namespace.output)
     except KnownError as e:
