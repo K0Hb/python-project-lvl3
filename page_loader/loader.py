@@ -115,7 +115,7 @@ def edit_links(page: str, url: str, path_to_folder_for_files: str) -> tuple:
     for element in elements:
         tag = tags[element.name]
         link = urljoin(url, element.get(tag))
-        if link.split('.')[-1][-1] == '/':
+        if len(link.split('.')[-1]) >= 5:
             resource_path = os.path.join(dir_name, generate_name(link))
         else:
             resource_path = os.path.join(dir_name,
