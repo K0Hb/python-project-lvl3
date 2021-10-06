@@ -104,13 +104,13 @@ def edit_links(page: str, url: str, path_to_folder_for_files: str) -> tuple:
     soup = BeautifulSoup(page, 'html.parser')
     result = []
 
-    def check_local(element, base_url):
+    def check_local(element) -> bool:
         link = element.get(tags[element.name])
-        netloc_first = urlparse(base_url).netloc
-        netloc_second = urlparse(urljoin(base_url, link)).netloc
+        netloc_first = urlparse(url).netloc
+        netloc_second = urlparse(urljoin(url, link)).netloc
         return netloc_first == netloc_second
 
-    elements = filter(lambda string_http: check_local(string_http, url),
+    elements = filter(lambda string_http: check_local(string_http),
                       soup.find_all(list(tags)))
     for element in elements:
         tag = tags[element.name]
