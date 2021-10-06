@@ -57,7 +57,7 @@ def checking_the_directory(path: str) -> None:
             raise KnownError('Your folder is incorrect') from e
 
 
-def saved(changed_page: str and bytes, path_to_page: str, mode='w') -> None:
+def saved(changed_page: str and bytes, path_to_page: str, mode='wb') -> None:
     logging.info('Saving page')
     try:
         with open(path_to_page, mode) as file:
@@ -82,6 +82,7 @@ def load_page(link: str) -> str:
 
 
 def load_files(source: list) -> None:
+    print(source)
     logging.info('Loading links')
     bar = IncrementalBar('Loading links', max=len(source))
     for link, path_to_extra_file in source:
@@ -118,5 +119,5 @@ def edit_links(page: str, url: str, path_to_folder_for_files: str) -> tuple:
         resource_path = os.path.join(dir_name, generate_name(link, 'file'))
         element[tag] = resource_path
         result.append((link, os.path.join(dir_path, resource_path)))
-        changed_page = soup.prettify(formatter='html5')
+        changed_page = soup.prettify("utf-8")
     return changed_page, result
