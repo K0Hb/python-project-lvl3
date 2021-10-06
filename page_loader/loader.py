@@ -26,27 +26,6 @@ def modification_level(level_logging: str) -> None:
                                level=dict_of_level[level_logging])
 
 
-def download(url: str, path: str) -> tuple:
-
-    page = load_page(url)
-
-    name_of_page = generate_name(url)
-    path_to_page = os.path.join(path, name_of_page)
-    name_of_folder = generate_name(url, 'directory')
-    path_to_folder = os.path.join(path, name_of_folder)
-
-    checking_the_directory(path_to_folder)
-
-    changed_page, source_of_files = \
-        edit_links(page, url, path_to_folder)
-
-    saved(changed_page, path_to_page)
-
-    load_files(source_of_files)
-
-    return path_to_page, path_to_folder
-
-
 def generate_name(url: str, status=None) -> str:
     logging.info('Сreating a name')
     link = url.rstrip('/')
@@ -147,6 +126,3 @@ def edit_links(page: str, url: str, path_to_folder_for_files: str) -> tuple:
                 result.append((path, path_to_extra_file))
     changed_page = (soup.prettify("utf-8")).decode('utf-8')
     return changed_page, result
-
-if __name__ == '__main__':
-    download()

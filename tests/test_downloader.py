@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-from page_loader.download import download, generate_name, KnownError, load_files
+from page_loader import download
+from page_loader.loader import generate_name, KnownError, load_files
 import tempfile
 import pathlib
 import re

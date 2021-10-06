@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css?family=Alegreya:400,400i,700,700i');
+@import url('https://fonts.googleapis.com/css?family=Amaranth:400,700,400italic,700italic');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono:500,500i,700,700i');
+
+body {
+  margin-top: 2em;
+  margin-left: 4em;
+  margin-right: 4em;
+  font-family: Alegreya, serif;
+  font-size: 14pt;
+}
+
+@media (min-resolution: 250dpi) and (max-width: 1000px) {
+  body {
+    margin-top: 0;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 12pt;
+  }
+}
+
+*.milk { font-variant: small-caps }
+
+h1, h2, h3 {
+  font-family: Amaranth, sans-serif;
+}
+
+code, tt {
+  font-family: Roboto Mono, monospace;
+  font-size: 90%;
+}
+
+table.milk-header {
+  width: 100%;
+  margin-bottom: 0.5em;
+}
+
+table.milk-header td {
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-bottom: 1em;
+}
+
+table.milk-header td:first-child {
+  vertical-align: top;
+  width: 50px;
+}
+
+table.milk-header td h1 {
+  text-align: center;
+  font-size: 24pt;
+}
+
+table.milk-header td h2 {
+  text-align: center;
+  font-size: 18pt;
+  font-style: italic;
+  font-weight: normal;
+}
+
+table.milk-header td h3 {
+  text-align: center;
+  font-size: 12pt;
+  font-style: italic;
+  font-weight: normal;
+}
+
+table.milk-header td p {
+  font-style: italic;
+}
+
+table.footer {
+  border-collapse: collapse;
+  margin-top: 2em;
+  margin-bottom: 0;
+  width: 100%;
+  background-color: white;
+}
+
+table.footer td {
+  padding-top: 0.5em;
+  padding-bottom: 0.2em;
+  padding-left: 0.2em;
+  padding-right: 0.2em;
+  border-top-style: ridge;
+  border-color: white;
+  text-align: left;
+  vertical-align: top;
+  font-size: small;
+  font-family: sans-serif;
+  color: rgb(96,96,96);
+}
+
+table.footer td + td {
+  text-align: right;
+}
+
+table.footer :link, table.footer :visited {
+  color: rgb(32,32,128);
+}
+
+ul.main {
+  margin-left: 7em;
+}
+
+p.main {
+  font-weight: bold;
+  padding-top: 10pt;
+  margin-left: 8em;
+}
+
+@media (min-resolution: 250dpi) and (max-width: 1000px) {
+  ul.main, p.main {
+    margin-left: 0.5em;
+  }
+}
+
+table.ad {
+  width: 100%;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+  border-collapse: collapse;
+  border-bottom-style: ridge;
+  border-bottom-color: white;
+  border-top-style: ridge;
+  border-top-color: white;
+}
+
+table.ad td {
+  padding-top: 1em;
+  padding-bottom: 1em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  text-align: center;
+}
+
+td.filler {
+  font-family: sans-serif;
+  font-size: 24pt;
+  font-family: Amaranth, sans-serif;
+  color: #aaa;
+}
