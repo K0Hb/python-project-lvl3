@@ -99,6 +99,7 @@ def load_files(source: list) -> None:
 
 
 def edit_links(page: str, url: str, path_to_folder_for_files: str) -> tuple:
+    logging.info('Edit links')
     tags = {'link': 'href', 'img': 'src', 'script': 'src'}
     dir_path, dir_name = os.path.split(path_to_folder_for_files)
     soup = BeautifulSoup(page, 'html.parser')
