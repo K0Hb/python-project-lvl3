@@ -39,9 +39,7 @@ def generate_name(url: str, status=None) -> str:
         final_name += letter_new
         if len(final_name) >= 50:
             break
-    if status == 'file':
-        final_name += extension
-    elif status == 'directory':
+    if status == 'directory':
         final_name += '_files'
     else:
         final_name += '.html'
@@ -82,7 +80,6 @@ def load_page(link: str) -> str:
 
 
 def load_files(source: list) -> None:
-    print(source)
     logging.info('Loading links')
     bar = IncrementalBar('Loading links', max=len(source))
     for link, path_to_extra_file in source:
@@ -116,7 +113,7 @@ def edit_links(page: str, url: str, path_to_folder_for_files: str) -> tuple:
     for element in elements:
         tag = tags[element.name]
         link = urljoin(url, element.get(tag))
-        resource_path = os.path.join(dir_name, generate_name(link, 'file'))
+        resource_path = os.path.join(dir_name, generate_name(link))
         element[tag] = resource_path
         result.append((link, os.path.join(dir_path, resource_path)))
         changed_page = soup.prettify("utf-8")
