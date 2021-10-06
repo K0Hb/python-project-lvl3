@@ -11,23 +11,21 @@ import os
 def test_downloader() -> None:
     with tempfile.TemporaryDirectory() as tmp:   
         path_dir = pathlib.Path(tmp)
-        path_page, path_to_folder = download('http://milk.com/' , path_dir)
+        path_page = download('http://milk.com/' , path_dir)
         assert_path_to_page = re.fullmatch(r'/tmp/.........../milk-com.html', path_page)
-        assert_path_to_folder = re.fullmatch(r'/tmp/.........../milk-com_files', path_to_folder)
         assert path_page == assert_path_to_page.group(0)
-        assert path_to_folder == assert_path_to_folder.group(0)
 
 
-@pytest.mark.parametrize('URL, get_name, status', [
+@pytest.mark.parametrize('URL, get_name, dir_status, file_status', [
     ('https://github.com/K0Hb/python-project-lvl3',
-    'github-com-K0Hb-python-project-lvl3.html', None),
+    'github-com-K0Hb-python-project-lvl3.html', None, None),
     ('https://github.com/K0Hb/python-project-lvl3',
-    'github-com-K0Hb-python-project-lvl3_files', 'directory'),
+    'github-com-K0Hb-python-project-lvl3_files', True, None),
     ('https://github.com/K0Hb/python-project-lvl3.css',
-    'github-com-K0Hb-python-project-lvl3.css', 'file')
+    'github-com-K0Hb-python-project-lvl3.css', None, True)
 ])
-def test_get_name(URL: str, get_name: str, status: str) -> None:
-    assert generate_name(URL, status) == get_name
+def test_get_name(URL: str, get_name: str, dir_status, file_status) -> None:
+    assert generate_name(URL, dir=dir_status, file=file_status) == get_name
 
 
 def test_connection_failed() -> None:
