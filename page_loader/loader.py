@@ -104,18 +104,18 @@ def edit_links(page: str, url: str, path_to_folder_for_files: str) -> tuple:
     soup = BeautifulSoup(page, 'html.parser')
     result = []
 
-    def is_local(element, base_url):
+    def check_local(element, base_url):
         link = element.get(tags[element.name])
-        netloc1 = urlparse(base_url).netloc
-        netloc2 = urlparse(urljoin(base_url, link)).netloc
-        return netloc1 == netloc2
+        netloc_first = urlparse(base_url).netloc
+        netloc_second = urlparse(urljoin(base_url, link)).netloc
+        return netloc_first == netloc_second
 
-    elements = filter(lambda x: is_local(x, url),
+    elements = filter(lambda string_http: check_local(string_http, url),
                       soup.find_all(list(tags)))
     for element in elements:
         tag = tags[element.name]
         link = urljoin(url, element.get(tag))
-        resource_path = os.path.join(dir_name, generate_name(link))
+        resource_path = os.path.join(dir_name, generate_name(link, 'file'))
         element[tag] = resource_path
         result.append((link, os.path.join(dir_path, resource_path)))
         changed_page = soup.prettify(formatter='html5')
