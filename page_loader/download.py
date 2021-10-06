@@ -147,3 +147,6 @@ def edit_links(page: str, url: str, path_to_folder_for_files: str) -> tuple:
                 result.append((path, path_to_extra_file))
     changed_page = (soup.prettify("utf-8")).decode('utf-8')
     return changed_page, result
+
+if __name__ == '__main__':
+    download()
