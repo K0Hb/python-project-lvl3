@@ -11,7 +11,7 @@ package-install:
 
 
 lint:
-	poetry run flake8 page_loader
+	poetry run flake8 
 
 
 coverage:

@@ -13,9 +13,9 @@ def args_parser():
     parser.add_argument('-o', '--output', default=os.getcwd(), type=str,
                         help='folder for saving link')
     parser.add_argument(
-          '-l', '--level',
-          type=str, default=INFO,
-          choices=[DEBUG, INFO, WARNING, ERROR, CRITICAL],
-          help='level of logging')
+                        '-l', '--level',
+                        type=str, default=INFO,
+                        choices=[DEBUG, INFO, WARNING, ERROR, CRITICAL],
+                        help='level of logging')
     parser.add_argument('URL', type=str)
     return parser.parse_args()
