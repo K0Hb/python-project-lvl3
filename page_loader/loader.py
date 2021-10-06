@@ -5,7 +5,7 @@ import re
 import logging
 from progress.bar import IncrementalBar
 from bs4 import BeautifulSoup
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urljoin
 from page_loader.args_parser import DEBUG, INFO, WARNING, ERROR, CRITICAL
 
 
@@ -99,30 +99,24 @@ def load_files(source: list) -> None:
 
 
 def edit_links(page: str, url: str, path_to_folder_for_files: str) -> tuple:
-    logging.info('Changing page')
-    soup = BeautifulSoup(page, "lxml")
-    links = soup.find_all(["script", "img", "link"])
-    stop_prefix = ['http', 'www']
+    tags = {'link': 'href', 'img': 'src', 'script': 'src'}
+    dir_path, dir_name = os.path.split(path_to_folder_for_files)
+    soup = BeautifulSoup(page, 'html.parser')
     result = []
-    attr = ''
-    link = ''
-    for tag in links:
-        if 'href' in tag.attrs:
-            attr = 'href'
-            link = tag['href']
-        elif 'src' in tag.attrs:
-            attr = 'src'
-            link = tag['src']
-        if attr != '':
-            if all(not link.startswith(prefix)
-                   for prefix in stop_prefix):
-                link = link.lstrip('/')
-                path = os.path.join(url, link)
-                path_to_extra_file = \
-                    os.path.join(
-                        path_to_folder_for_files,
-                        generate_name(path, 'file'))
-                tag[attr] = path_to_extra_file
-                result.append((path, path_to_extra_file))
-    changed_page = (soup.prettify("utf-8")).decode('utf-8')
+
+    def is_local(element, base_url):
+        link = element.get(tags[element.name])
+        netloc1 = urlparse(base_url).netloc
+        netloc2 = urlparse(urljoin(base_url, link)).netloc
+        return netloc1 == netloc2
+
+    elements = filter(lambda x: is_local(x, url),
+                      soup.find_all(list(tags)))
+    for element in elements:
+        tag = tags[element.name]
+        link = urljoin(url, element.get(tag))
+        resource_path = os.path.join(dir_name, generate_name(link))
+        element[tag] = resource_path
+        result.append((link, os.path.join(dir_path, resource_path)))
+        changed_page = soup.prettify(formatter='html5')
     return changed_page, result
