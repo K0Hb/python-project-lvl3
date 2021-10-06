@@ -11,7 +11,7 @@ def download(url: str, path: str) -> tuple:
 
     name_of_page = generate_name(url)
     path_to_page = os.path.join(path, name_of_page)
-    name_of_folder = generate_name(url, 'directory')
+    name_of_folder = generate_name(url, dir=True)
     path_to_folder = os.path.join(path, name_of_folder)
 
     checking_the_directory(path_to_folder)

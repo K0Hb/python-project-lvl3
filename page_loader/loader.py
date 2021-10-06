@@ -26,12 +26,12 @@ def modification_level(level_logging: str) -> None:
                                level=dict_of_level[level_logging])
 
 
-def generate_name(url: str, status=None) -> str:
+def generate_name(url: str, file=None, dir=None) -> str:
     logging.info('Сreating a name')
     link = url.rstrip('/')
     o = urlparse(link)
     name = o.netloc + o.path
-    if status == 'file':
+    if file:
         name, extension = os.path.splitext(name)
     final_name = ''
     for letter in name:
@@ -39,7 +39,9 @@ def generate_name(url: str, status=None) -> str:
         final_name += letter_new
         if len(final_name) >= 50:
             break
-    if status == 'directory':
+    if file:
+        final_name += extension
+    elif dir:
         final_name += '_files'
     else:
         final_name += '.html'
@@ -113,7 +115,11 @@ def edit_links(page: str, url: str, path_to_folder_for_files: str) -> tuple:
     for element in elements:
         tag = tags[element.name]
         link = urljoin(url, element.get(tag))
-        resource_path = os.path.join(dir_name, generate_name(link))
+        if link.split('.')[-1][-1] == '/':
+            resource_path = os.path.join(dir_name, generate_name(link))
+        else:
+            resource_path = os.path.join(dir_name,
+                                         generate_name(link, file=True))
         element[tag] = resource_path
         result.append((link, os.path.join(dir_path, resource_path)))
         changed_page = soup.prettify("utf-8")
