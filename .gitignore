@@ -9,5 +9,5 @@ coverage.xml
 .vim
 .vscode/
 .idea/
-.log
+.log/
 my.log
