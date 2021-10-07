@@ -11,13 +11,11 @@ import os
 def test_downloader() -> None:
     with tempfile.TemporaryDirectory() as tmp:
         path_dir = pathlib.Path(tmp)
-        path_page, path_to_folder = download('http://milk.com/', path_dir)
+        path_page = download('http://milk.com/', path_dir)
         test_path_to_page = re.fullmatch(r'/tmp/.........../milk-com.html',
                                          path_page)
-        test_path_to_folder = re.fullmatch(r'/tmp/.........../milk-com_files',
-                                           path_to_folder)
         assert path_page == test_path_to_page.group(0)
-        assert path_to_folder == test_path_to_folder.group(0)
+        assert os.path.isfile(path_page)
 
 
 @pytest.mark.parametrize('URL, get_name, dir_status, file_status', [
