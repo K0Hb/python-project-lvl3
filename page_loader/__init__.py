@@ -27,4 +27,4 @@ def download(url: str, path: str) -> tuple:
     bar.next()
     bar.finish()
     logging.info('The page is saved')
-    return path_to_page
+    return path_to_page, path_to_folder
