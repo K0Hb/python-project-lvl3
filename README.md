@@ -15,13 +15,13 @@ ______
 
 ### Использование:
 
-`$ page-loader --output=/var/tmp -lelvel=error https://hexlet.io/courses`
-Где: 
-`$ page-loader` - вызов утилиты 
-`--output=/var/tmp` + `=/path` - указываем путь до дириектории(по умолчания сохраняет в директорию вызова)
-`-level=error` - уровень логирования (по умолчанию "info") , уровни логирования ['debug', 'info', 'error', 'warning', 'critical']
-`https://hexlet.io/courses` - любая рабочая URL ссылка
-`gendiff -h` - помощь
+`$ page-loader --output=/var/tmp -lelvel=error https://hexlet.io/courses`  
+Где:  
+`$ page-loader` - вызов утилиты  
+`--output=/var/tmp` + `=/path` - указываем путь до дириектории(по умолчания сохраняет в директорию вызова)  
+`-level=error` - уровень логирования (по умолчанию "info") , уровни логирования ['debug', 'info', 'error', 'warning', 'critical']  
+`https://hexlet.io/courses` - любая рабочая URL ссылка  
+`gendiff -h` - помощь  
 
 __________
 
