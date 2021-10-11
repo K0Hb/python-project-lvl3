@@ -3,6 +3,7 @@ import requests
 import os
 import re
 import logging
+from typing import Union
 from progress.bar import IncrementalBar
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse, urljoin
@@ -57,7 +58,7 @@ def checking_the_directory(path: str) -> None:
             raise KnownError('Your folder is incorrect') from e
 
 
-def saved(changed_page: str and bytes, path_to_page: str, mode='wb') -> None:
+def saved(changed_page: Union[str, bytes], path_to_page: str, mode='wb') -> None:
     logging.info('Saving page')
     try:
         with open(path_to_page, mode) as file:
