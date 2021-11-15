@@ -18,13 +18,13 @@ ______
 `$ page-loader --output=/var/tmp -l=error https://hexlet.io/courses`  
 Где:  
 `$ page-loader` - вызов утилиты  
-`--output=/var/tmp` + `=/path` - указываем путь до дириектории(по умолчания сохраняет в директорию вызова)  
-`-level=error` - уровень логирования (по умолчанию "info") , уровни логирования ['debug', 'info', 'error', 'warning', 'critical']  
+`--output` + `=/path` - указываем путь до дириектории(по умолчания сохраняет в директорию вызова)  
+`-l` + `=error` - уровень логирования (по умолчанию "info") , уровни логирования ['debug', 'info', 'error', 'warning', 'critical']  
 `https://hexlet.io/courses` - любая рабочая URL ссылка  
 `page-loader -h` - помощь  
 
 __________
 
 ### Демонстрация работы утилиты:
-
+[![asciicast](https://asciinema.org/a/KInwWvZAJehPXpxfSCeQRU1UY.svg)](https://asciinema.org/a/KInwWvZAJehPXpxfSCeQRU1UY)
 
