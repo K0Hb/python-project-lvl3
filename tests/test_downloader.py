@@ -38,7 +38,7 @@ def test_load_files() -> None:
         assert os.path.isfile(path)
 
 
-@pytest.mark.parametrize('URL, path, exception' ,[
+@pytest.mark.parametrize('URL, path, exception', [
     ('K0Hb.github.io/github.io/', '/fantom_path/', 'Wrong address!'),
     ('ht://K0Hb.github.io/github.io/', '/fantom_path/', 'Wrong address!'),
     ('http://httpbin.org/status/404', '/fantom_path/', 'Connection failed'),
