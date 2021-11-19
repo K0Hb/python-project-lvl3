@@ -30,13 +30,6 @@ def test_get_name(URL: str, get_name: str, dir_status, file_status) -> None:
     assert generate_name(URL, dir=dir_status, file=file_status) == get_name
 
 
-def test_connection_failed() -> None:
-    with tempfile.TemporaryDirectory() as temp:
-        with pytest.raises(KnownError) as e_info:
-            download('http://httpbin.org/status/404', temp)
-        assert 'Connection failed' in str(e_info.value)
-
-
 def test_load_files() -> None:
     with tempfile.TemporaryDirectory() as temp:
         link_for_test = 'https://github.com/K0Hb/python-project-lvl3'
@@ -45,26 +38,14 @@ def test_load_files() -> None:
         assert os.path.isfile(path)
 
 
-def test_error_no_schema() -> None:
+@pytest.mark.parametrize('URL, path, exception',[
+    ('K0Hb.github.io/github.io/', '/fantom_path/', 'Wrong address!'),
+    ('ht://K0Hb.github.io/github.io/', '/fantom_path/', 'Wrong address!'),
+    ('http://httpbin.org/status/404', '/fantom_path/', 'Connection failed'),
+    ('https://github.com/K0Hb/python-project-lvl3',
+                 'unreal_path_to_file', 'Your folder is incorrect')
+])
+def test_errors(URL: str, path: str, exception: str) -> None:
     with pytest.raises(KnownError) as e_info:
-        download('K0Hb.github.io/github.io/', '/fantom_path/')
-    assert 'Wrong address!' in str(e_info.value)
-
-
-def test_error_invalid_schema() -> None:
-    with pytest.raises(KnownError) as e_info:
-        download('ht://K0Hb.github.io/github.io/', '/fantom_path/')
-    assert 'Wrong address!' in str(e_info.value)
-
-
-def test_error_200() -> None:
-    with pytest.raises(KnownError) as e_info:
-        download('http://httpbin.org/status/404', '/fantom_path/')
-    assert 'Connection failed' in str(e_info.value)
-
-
-def test_error_umreal_folder() -> None:
-    with pytest.raises(KnownError) as e_info:
-        download('https://github.com/K0Hb/python-project-lvl3',
-                 'unreal_path_to_file')
-    assert 'Your folder is incorrect' in str(e_info.value)
+        download(URL, path)
+    assert exception in str(e_info.value)

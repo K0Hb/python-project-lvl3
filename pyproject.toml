@@ -16,7 +16,6 @@ lxml = "^4.6.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
-argparse = "^1.4.0"
 flake8 = "^3.9.2"
 pytest-cov = "^2.12.1"
 

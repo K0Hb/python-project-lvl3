@@ -28,9 +28,6 @@ jobs:
     - name: Lint with flake8
       run: |
         make lint
-    - name: Test with pytest
-      run: |
-        poetry run pytest
     - name: Coverage report for CodeClimate
       uses: paambaati/codeclimate-action@v2.7.5
       env:
