@@ -38,12 +38,12 @@ def test_load_files() -> None:
         assert os.path.isfile(path)
 
 
-@pytest.mark.parametrize('URL, path, exception',[
+@pytest.mark.parametrize('URL, path, exception' ,[
     ('K0Hb.github.io/github.io/', '/fantom_path/', 'Wrong address!'),
     ('ht://K0Hb.github.io/github.io/', '/fantom_path/', 'Wrong address!'),
     ('http://httpbin.org/status/404', '/fantom_path/', 'Connection failed'),
-    ('https://github.com/K0Hb/python-project-lvl3',
-                 'unreal_path_to_file', 'Your folder is incorrect')
+    ['https://github.com/K0Hb/python-project-lvl3',
+     'unreal_path_to_file', 'Your folder is incorrect']
 ])
 def test_errors(URL: str, path: str, exception: str) -> None:
     with pytest.raises(KnownError) as e_info:

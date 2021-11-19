@@ -58,10 +58,10 @@ def checking_the_directory(path: str) -> None:
             raise KnownError('Your folder is incorrect') from e
 
 
-def saved(changed_page: Union[str, bytes], path_to_page: str, mode='wb') -> None:
+def saved(changed_page: Union[str, bytes], path_page: str, mode='wb') -> None:
     logging.info('Saving page')
     try:
-        with open(path_to_page, mode) as file:
+        with open(path_page, mode) as file:
             file.write(changed_page)
     except IOError as e:
         raise KnownError('Your folder is incorrect') from e
