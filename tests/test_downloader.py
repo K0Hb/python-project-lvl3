@@ -18,16 +18,16 @@ def test_downloader() -> None:
         assert os.path.isfile(path_page)
 
 
-@pytest.mark.parametrize('URL, get_name, dir_status, file_status', [
+@pytest.mark.parametrize('URL, get_name,file_status, dir_status,', [
     ('https://github.com/K0Hb/python-project-lvl3',
      'github-com-K0Hb-python-project-lvl3.html', None, None),
     ('https://github.com/K0Hb/python-project-lvl3',
-     'github-com-K0Hb-python-project-lvl3_files', True, None),
+     'github-com-K0Hb-python-project-lvl3_files', None, True),
     ('https://github.com/K0Hb/python-project-lvl3.css',
-     'github-com-K0Hb-python-project-lvl3.css', None, True)
+     'github-com-K0Hb-python-project-lvl3.css', True, None)
 ])
 def test_get_name(URL: str, get_name: str, dir_status, file_status) -> None:
-    assert generate_name(URL, dir=dir_status, file=file_status) == get_name
+    assert generate_name(URL, file=file_status, dir=dir_status) == get_name
 
 
 def test_load_files() -> None:
@@ -42,8 +42,8 @@ def test_load_files() -> None:
     ('K0Hb.github.io/github.io/', '/fantom_path/', 'Wrong address!'),
     ('ht://K0Hb.github.io/github.io/', '/fantom_path/', 'Wrong address!'),
     ('http://httpbin.org/status/404', '/fantom_path/', 'Connection failed'),
-    ['https://github.com/K0Hb/python-project-lvl3',
-     'unreal_path_to_file', 'Your folder is incorrect']
+    ('https://github.com/K0Hb/python-project-lvl3',
+     'unreal_path_to_file', 'Your folder is incorrect')
 ])
 def test_errors(URL: str, path: str, exception: str) -> None:
     with pytest.raises(KnownError) as e_info:

@@ -22,8 +22,6 @@ def modification_level(level_logging: str) -> None:
                      INFO: logging.INFO,
                      }
     return logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s',
-                               filename='my.log',
-                               filemode='w',
                                level=dict_of_level[level_logging])
 
 
@@ -35,11 +33,8 @@ def generate_name(url: str, file=None, dir=None) -> str:
     if file:
         name, extension = os.path.splitext(name)
     final_name = ''
-    for letter in name:
-        letter_new = re.sub(r'\W', '-', letter)
-        final_name += letter_new
-        if len(final_name) >= 50:
-            break
+    letter_new = re.sub(r'\W', '-', name)
+    final_name += letter_new
     if file:
         final_name += extension
     elif dir:
@@ -49,13 +44,12 @@ def generate_name(url: str, file=None, dir=None) -> str:
     return final_name
 
 
-def checking_the_directory(path: str) -> None:
+def creating_the_directory(path: str) -> None:
     logging.info('Сhecking the directory')
-    if not os.path.exists(path):
-        try:
-            os.mkdir(path)
-        except IOError as e:
-            raise KnownError('Your folder is incorrect') from e
+    try:
+        os.mkdir(path)
+    except IOError as e:
+        raise KnownError('Your folder is incorrect') from e
 
 
 def saved(changed_page: Union[str, bytes], path_page: str, mode='wb') -> None:
