@@ -52,7 +52,8 @@ def creating_the_directory(path: str) -> None:
         raise KnownError('Your folder is incorrect') from e
 
 
-def save_file(changed_page: Union[str, bytes], path_page: str, mode='wb') -> None:
+def save_file(changed_page: Union[str, bytes],
+              path_page: str, mode='wb') -> None:
     logging.info('Saving page')
     try:
         with open(path_page, mode) as file:

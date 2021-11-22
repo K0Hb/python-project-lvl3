@@ -11,7 +11,7 @@ def main() -> None:
     url = namespace.URL
     path = namespace.output
     level_log = namespace.level
-    modification_level(level_log)
+    changing_logging_lvel(level_log)
     try:
         file_path = download(url, path)
         print(f'Page saved in {file_path}')
