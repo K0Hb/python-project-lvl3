@@ -14,7 +14,7 @@ class KnownError(Exception):
     pass
 
 
-def modification_level(level_logging: str) -> None:
+def changing_logging_lvel(level_logging: str) -> None:
     dict_of_level = {DEBUG: logging.DEBUG,
                      WARNING: logging.WARNING,
                      ERROR: logging.ERROR,
@@ -25,7 +25,7 @@ def modification_level(level_logging: str) -> None:
                                level=dict_of_level[level_logging])
 
 
-def generate_name(url: str, file=None, dir=None) -> str:
+def name_formation(url: str, file=None, dir=None) -> str:
     logging.info('Сreating a name')
     link = url.rstrip('/')
     o = urlparse(link)
@@ -52,7 +52,7 @@ def creating_the_directory(path: str) -> None:
         raise KnownError('Your folder is incorrect') from e
 
 
-def saved(changed_page: Union[str, bytes], path_page: str, mode='wb') -> None:
+def save_file(changed_page: Union[str, bytes], path_page: str, mode='wb') -> None:
     logging.info('Saving page')
     try:
         with open(path_page, mode) as file:
@@ -88,7 +88,7 @@ def load_files(source: list) -> None:
         except requests.exceptions.ConnectionError as e:
             raise KnownError('Connection error') from e
         data = r.content
-        saved(data, path_to_extra_file, mode='wb')
+        save_file(data, path_to_extra_file, mode='wb')
         bar.next()
     bar.finish()
 
@@ -100,22 +100,22 @@ def edit_links(page: str, url: str, path_to_folder_for_files: str) -> tuple:
     soup = BeautifulSoup(page, 'html.parser')
     result = []
 
-    def check_local(element) -> bool:
+    def is_local(element) -> bool:
         link = element.get(tags[element.name])
         netloc_first = urlparse(url).netloc
         netloc_second = urlparse(urljoin(url, link)).netloc
         return netloc_first == netloc_second
 
-    elements = filter(lambda string_http: check_local(string_http),
+    elements = filter(is_local,
                       soup.find_all(list(tags)))
     for element in elements:
         tag = tags[element.name]
         link = urljoin(url, element.get(tag))
         if len(link.split('.')[-1]) >= 5:
-            resource_path = os.path.join(dir_name, generate_name(link))
+            resource_path = os.path.join(dir_name, name_formation(link))
         else:
             resource_path = os.path.join(dir_name,
-                                         generate_name(link, file=True))
+                                         name_formation(link, file=True))
         element[tag] = resource_path
         result.append((link, os.path.join(dir_path, resource_path)))
         changed_page = soup.prettify("utf-8")

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from page_loader.download import download
-from page_loader.loader import modification_level, KnownError
+from page_loader.loader import changing_logging_lvel, KnownError
 from page_loader.args_parser import args_parser
 import logging
 import sys
