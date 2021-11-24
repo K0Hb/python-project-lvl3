@@ -8,6 +8,12 @@ import pytest
 import os
 
 
+def read(file_path: str) -> str:
+    with open(file_path, 'r') as f_file:
+        f_result = f_file.read()
+    return f_result
+
+
 def test_downloader() -> None:
     with tempfile.TemporaryDirectory() as tmp:
         path_dir = pathlib.Path(tmp)

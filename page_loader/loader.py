@@ -112,11 +112,8 @@ def edit_links(page: str, url: str, path_to_folder_for_files: str) -> tuple:
     for element in elements:
         tag = tags[element.name]
         link = urljoin(url, element.get(tag))
-        if len(link.split('.')[-1]) >= 5:
-            resource_path = os.path.join(dir_name, name_formation(link))
-        else:
-            resource_path = os.path.join(dir_name,
-                                         name_formation(link, file=True))
+        resource_path = os.path.join(dir_name,
+                                     name_formation(link, file=True))
         element[tag] = resource_path
         result.append((link, os.path.join(dir_path, resource_path)))
         changed_page = soup.prettify("utf-8")

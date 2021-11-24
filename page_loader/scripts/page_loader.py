@@ -18,12 +18,6 @@ def main() -> None:
     except KnownError:
         logging.error('Error')
         sys.exit(1)
-    except PermissionError:
-        logging.error('Not enough access rights')
-        sys.exit(1)
-    except FileNotFoundError:
-        logging.error('No such file or directory')
-        sys.exit(1)
     else:
         sys.exit(0)
 
