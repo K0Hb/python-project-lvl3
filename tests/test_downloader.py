@@ -6,27 +6,28 @@ import pytest
 import os
 
 
-def test_downloader(requests_mock, tmp_path) -> None:
-    with open('tests/fixtures/before_test_page.html') as web_page:
-        html_before = web_page.read()
-    with open('tests/fixtures/after_test_page.html') as result_page:
-        html_after = result_page.read()
-    url_test = 'http://knopka.ush.ru/'
-    requests_mock.get(url_test, text=html_before)
-    requests_mock.get('http://knopka.ush.ru/images/logo.svg')
-    requests_mock.get('http://knopka.ush.ru/stl_newstatus.css')
-    path_load_page = download(url_test, tmp_path)
-    with open(os.path.join(tmp_path, path_load_page)) as f:
-        test_page = f.read()
-        assert test_page == html_after
-    css_path = os.path.join(tmp_path, "knopka-ush-ru_files/"
+def test_downloader(requests_mock) -> None:
+    with tempfile.TemporaryDirectory() as temp:
+        with open('tests/fixtures/before_test_page.html') as web_page:
+            html_before = web_page.read()
+        with open('tests/fixtures/after_test_page.html') as result_page:
+            html_after = result_page.read()
+        url_test = 'http://knopka.ush.ru/'
+        requests_mock.get(url_test, text=html_before)
+        requests_mock.get('http://knopka.ush.ru/images/logo.svg')
+        requests_mock.get('http://knopka.ush.ru/stl_newstatus.css')
+        path_load_page = download(url_test, temp)
+        with open(os.path.join(temp, path_load_page)) as f:
+            test_page = f.read()
+            assert test_page == html_after
+        css_path = os.path.join(temp, "knopka-ush-ru_files/"
                                       "knopka-ush-ru-stl_newstatus.css")
-    html_path = os.path.join(tmp_path, 'knopka-ush-ru.html')
-    svg_path = os.path.join(tmp_path, "knopka-ush-ru_files/"
+        html_path = os.path.join(temp, 'knopka-ush-ru.html')
+        svg_path = os.path.join(temp, "knopka-ush-ru_files/"
                                       "knopka-ush-ru-images-logo.svg")
-    assert os.path.exists(css_path)
-    assert os.path.exists(svg_path)
-    assert os.path.exists(html_path)
+        assert os.path.exists(css_path)
+        assert os.path.exists(svg_path)
+        assert os.path.exists(html_path)
 
 
 @pytest.mark.parametrize('URL, get_name,file_status, dir_status,', [
