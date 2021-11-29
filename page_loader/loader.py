@@ -98,8 +98,7 @@ def load_files(source: list) -> None:
     bar.finish()
 
 
-def is_local(element, url: str) -> bool:
-    link = element.get(TAGS[element.name])
+def is_local(link, url: str) -> bool:
     netloc_first = urlparse(url).netloc
     netloc_second = urlparse(urljoin(url, link)).netloc
     return netloc_first == netloc_second
@@ -111,11 +110,11 @@ def edit_links_to_local(page: str, url: str,
     dir_path, dir_name = os.path.split(path_to_folder_for_files)
     soup = BeautifulSoup(page, 'html.parser')
     elements = [element for element in soup.find_all(list(TAGS))
-                if is_local(element, url)]
+                if is_local(element.get(TAGS[element.name]), url)]
     result = []
     for element in elements:
         tag = TAGS[element.name]
-        link = urljoin(url, element.get(tag))
+        link = urljoin(url, element.get(tag, ''))
         if os.path.splitext(link)[1] == '':
             resource_path = os.path.join(dir_name, formation_local_name(link))
         else:
