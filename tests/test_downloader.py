@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from page_loader import download
-from page_loader.loader import name_formation, KnownError, load_files
+from page_loader.loader import formation_local_name, KnownError, load_files
 import tempfile
 import pytest
 import os
@@ -39,13 +39,14 @@ def test_downloader(requests_mock) -> None:
      'github-com-K0Hb-python-project-lvl3.css', True, None)
 ])
 def test_get_name(URL: str, get_name: str, dir_status, file_status) -> None:
-    assert name_formation(URL, file=file_status, dir=dir_status) == get_name
+    assert formation_local_name(URL, file=file_status,
+                                dir=dir_status) == get_name
 
 
 def test_load_files() -> None:
     with tempfile.TemporaryDirectory() as temp:
         link_for_test = 'https://github.com/K0Hb/python-project-lvl3'
-        path = os.path.join(temp, name_formation(link_for_test, 'file'))
+        path = os.path.join(temp, formation_local_name(link_for_test, 'file'))
         load_files([(link_for_test, path)])
         assert os.path.isfile(path)
 

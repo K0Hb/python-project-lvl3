@@ -28,7 +28,7 @@ def changing_logging_lvel(level_logging: str) -> None:
                                level=dict_of_level[level_logging])
 
 
-def name_formation(url: str, file=None, dir=None) -> str:
+def formation_local_name(url: str, file=None, dir=None) -> str:
     logging.info('Сreating a name')
     link = url.rstrip('/')
     o = urlparse(link)
@@ -47,7 +47,7 @@ def name_formation(url: str, file=None, dir=None) -> str:
     return final_name
 
 
-def creating_the_directory(path: str) -> None:
+def create_directory(path: str) -> None:
     logging.info('Сhecking the directory')
     try:
         os.mkdir(path)
@@ -105,7 +105,8 @@ def is_local(element, url: str) -> bool:
     return netloc_first == netloc_second
 
 
-def edit_links(page: str, url: str, path_to_folder_for_files: str) -> tuple:
+def edit_links_to_local(page: str, url: str,
+                        path_to_folder_for_files: str) -> tuple:
     logging.info('Edit links')
     dir_path, dir_name = os.path.split(path_to_folder_for_files)
     soup = BeautifulSoup(page, 'html.parser')
@@ -116,11 +117,11 @@ def edit_links(page: str, url: str, path_to_folder_for_files: str) -> tuple:
         tag = TAGS[element.name]
         link = urljoin(url, element.get(tag))
         if len(link.split('.')[-1]) >= 5:
-            resource_path = os.path.join(dir_name, name_formation(link))
+            resource_path = os.path.join(dir_name, formation_local_name(link))
         else:
             resource_path = os.path.join(dir_name,
-                                         name_formation(link, file=True))
+                                         formation_local_name(link, file=True))
         element[tag] = resource_path
         result.append((link, os.path.join(dir_path, resource_path)))
-        changed_page = soup.prettify("utf-8")
+    changed_page = soup.prettify("utf-8")
     return changed_page, result
