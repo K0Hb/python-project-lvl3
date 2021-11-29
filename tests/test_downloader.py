@@ -6,28 +6,39 @@ import pytest
 import os
 
 
+URL_TEST = 'http://knopka.ush.ru/'
+
+PATH_FIXTURES_MOCK_lINKS = {
+    'tests/fixtures/before_test_page.html': 'http://knopka.ush.ru/',
+    'tests/fixtures/test_css.css': 'http://knopka.ush.ru/stl_newstatus.css',
+    'tests/fixtures/test_svg.svg': 'http://knopka.ush.ru/images/logo.svg',
+}
+
+LOCAL_PATH_NAME = (
+    'knopka-ush-ru_files/knopka-ush-ru.html',
+    'knopka-ush-ru_files/knopka-ush-ru-stl_newstatus.css',
+    'knopka-ush-ru_files/knopka-ush-ru-images-logo.svg',
+)
+
+
 def test_downloader(requests_mock) -> None:
     with tempfile.TemporaryDirectory() as temp:
-        with open('tests/fixtures/before_test_page.html') as web_page:
-            html_before = web_page.read()
-        with open('tests/fixtures/after_test_page.html') as result_page:
-            html_after = result_page.read()
-        url_test = 'http://knopka.ush.ru/'
-        requests_mock.get(url_test, text=html_before)
-        requests_mock.get('http://knopka.ush.ru/images/logo.svg')
-        requests_mock.get('http://knopka.ush.ru/stl_newstatus.css')
-        path_load_page = download(url_test, temp)
-        with open(os.path.join(temp, path_load_page)) as f:
-            test_page = f.read()
-            assert test_page == html_after
-        css_path = os.path.join(temp, "knopka-ush-ru_files/"
-                                      "knopka-ush-ru-stl_newstatus.css")
-        html_path = os.path.join(temp, 'knopka-ush-ru.html')
-        svg_path = os.path.join(temp, "knopka-ush-ru_files/"
-                                      "knopka-ush-ru-images-logo.svg")
-        assert os.path.exists(css_path)
-        assert os.path.exists(svg_path)
-        assert os.path.exists(html_path)
+        for fixture, link in PATH_FIXTURES_MOCK_lINKS.items():
+            with open(fixture, 'rb') as fixture_file:
+                mocking_content = fixture_file.read()
+            requests_mock.get(link, content=mocking_content)
+        path_load_page = download(URL_TEST, temp)
+
+        with open(os.path.join(temp, path_load_page)) as test_page:
+            with open('tests/fixtures/after_test_page.html') as fixture_page:
+                assert test_page.read() == fixture_page.read()
+
+        local_files = [os.path.join(temp, file) for file in LOCAL_PATH_NAME]
+
+        for fixture, local in zip(PATH_FIXTURES_MOCK_lINKS, local_files):
+            with open(fixture, 'rb') as fixture_file:
+                with open(local, 'rb') as load_file:
+                    assert fixture_file.read() == load_file.read()
 
 
 @pytest.mark.parametrize('URL, get_name,file_status, dir_status,', [

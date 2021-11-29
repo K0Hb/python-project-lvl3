@@ -91,9 +91,11 @@ def load_files(source: list) -> None:
             raise KnownError('Connection failed') from e
         except requests.exceptions.Exception as e:
             raise KnownError('Connection failed') from e
-        finally:
+            continue
+        else:
             data = r.content
             save_file(data, path_to_extra_file, mode='wb')
+        finally:
             bar.next()
     bar.finish()
 

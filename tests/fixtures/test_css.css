@@ -1,0 +1,286 @@
+
+
+body {
+  margin: 0;
+  font: normal 16px verdana;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+h1 {
+  font: bold 42px verdana;
+  margin: 0px 0px 15px 0px;
+  padding: 0;
+  animation: scale_h1 1s;
+}
+
+h2 {
+  font: bold 30px verdana;
+  margin: 0 0 22px 0;
+  padding: 0;
+  line-height: 1;
+}
+
+.b-border-bottom {
+  border-bottom: 1px solid rgba(0,0,0, .2);
+}
+
+.b-topbar {
+  max-width: 1220px;
+  display: flex;
+  align-items: center;
+  display: -webkit-flex;
+  -webkit-align-items: center;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+  margin: 0 auto;
+  position: relative;
+}
+
+.b-topbar > a > img {
+  margin-left: 100px;
+}
+
+.b-topbar-text {
+  text-align: center;
+}
+
+.b-topbar-login {
+  text-decoration: none;
+  line-height: 37px;
+  height: 39px;
+  vertical-align: middle;
+  padding: 0 29px;
+  font-size: 11px;
+  background-color: #fff;
+  color: #006eb5;
+  border: 1px solid #006eb5;
+  margin: 25px 89px 21px 0;
+  text-transform: uppercase;
+  -webkit-appearance: none;
+}
+
+.b-topbar-login:hover {
+  background-color: #006eb5;
+  color: #fff;
+  border: 1px solid #006eb5;
+}
+
+.b-top-block {
+  padding: 75px 0 85px 0;
+  margin: 0;
+  text-align: center;
+}
+
+.b-top-block > p {
+  font-size: 30px;
+  margin: 0;
+  padding: 0;
+  animation: scaledescr 1.5s;
+}
+
+.b-grad-r {
+  display: flex;
+  display: -webkit-flex;
+  justify-content: flex-end;
+  -webkit-justify-content: flex-end;
+}
+.b-grad-r:before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: #fdfdfd;
+  background: -moz-linear-gradient(left, #fdfdfd 0%, #e9e9e9 100%);
+  background: -webkit-linear-gradient(left, #fdfdfd 0%,#e9e9e9 100%);
+  background: linear-gradient(to right, #fdfdfd 0%,#e9e9e9 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fdfdfd', endColorstr='#e9e9e9',GradientType=1 );      
+}
+
+.b-grad-l {
+  display: flex;
+  display: -webkit-flex;
+}
+
+.b-grad-l:before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: #fdfdfd;
+  background: -moz-linear-gradient(left, #e9e9e9 0%, #fdfdfd 100%);
+  background: -webkit-linear-gradient(left, #e9e9e9 0%,#fdfdfd 100%);
+  background: linear-gradient(to right, #e9e9e9 0%,#fdfdfd 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e9e9e9', endColorstr='#fdfdfd',GradientType=1 );
+}
+
+.b-animated-block, .b-animated-block:before, .b-animated-block:after {
+  animation: scaleblock 1s;
+  transition: all .5s;
+}
+
+.b-grad-l.b-animated-block > div {
+  animation: moveright .5s;
+}
+
+.b-grad-r.b-animated-block > div {
+  animation: moveleft .5s;
+}
+
+.b-content {
+  margin: 0 auto;
+  max-width: 1220px;
+}
+
+.b-present-block {
+  padding: 85px 105px;
+  position: relative;
+}
+
+.b-present-block * {
+  position: relative;
+  z-index: 100;
+}
+
+.b-present-block:after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+}
+
+.b-present-block p {
+  font-size: 24px;
+  margin: 0 0 20px 0;
+}
+
+.b-btn {
+  background-color: #006eb5;
+  color: #fff;
+  font-size: 11px;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 25px;
+  border: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  -webkit-appearance: none;
+}
+
+.b-btn:hover {
+  background-color: rgba(0,110,181, 0.8);
+}
+
+.b-pic-1:after {
+  background-image: url(images/pic_0.png);
+  background-position: 100% 0%;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+.b-pic-2:after {
+  background-image: url(images/pic_1.png);
+  background-position: 0% 0%;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+.b-pic-3:after {
+  background-image: url(images/pic_2.png);
+  background-position: 100% 100%;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+.b-pic-4:after {
+  background-image: url(images/pic_3.png);
+  background-position: 0% 0%;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+.b-pic-5:after {
+  background-image: url(images/pic_4.png);
+  background-position: 100% 0%;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+.b-pic-6:after {
+  background-image: url(images/pic_5.png);
+  background-position: 0% 100%;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+.b-footer-block {
+  padding: 18px 10px;
+  display: flex;
+  align-items: center;
+  display: -webkit-flex;
+  -webkit-align-items: center;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.b-footer-block > a {
+  color: #000;
+  text-decoration: none;
+  text-transform: uppercase;
+  padding-right: 50px;
+}
+
+.b-footer-block > a:hover {
+  text-decoration: underline;
+}
+
+.b-footer-block--bottom {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 11px;
+  text-transform: uppercase;
+  margin: 20px 10px 50px 10px;
+}
+
+.b-footer-block--bottom > a {
+  color: #000;
+  text-decoration: none;
+  text-transform: uppercase;
+  padding-right: 50px;
+  white-space: nowrap;
+  width: 16.66%;
+  margin: 3px 0;
+}
+
+.b-footer-block--bottom > a:hover {
+  text-decoration: underline;
+}
+
+.b-copyright {
+  font-size: 10px;
+  padding: 0 10px;
+  margin-bottom: 20px;
+  text-transform: none;
+}
+
+@keyframes scale_h1 {
+  0% {transform: matrix3d(0.8,0,0,0,0,0.8,0,0,0,0,1,0,0,0,0,1); opacity: 0; animation-timing-function: ease-in-out}
+  100% {transform: matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1); opacity: 1; }
+}
+
+@keyframes scaledescr {
+  0% {transform: matrix3d(0.8,0,0,0,0,0.8,0,0,0,0,1,0,0,0,0,1); opacity: 0; animation-timing-function: ease-in-out}
+  100% {transform: matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1); opacity: 1; }
+}
+
+@keyframes scaleblock {
+  0%, 15.789473684210526% {transform: matrix(1.1,0,0,1.1,0,0); opacity: 0; animation-timing-function: linear}
+  100% {transform: matrix(1,0,0,1,0,0); opacity: 1; }
+}
+
+@keyframes moveright {
+  0% {transform: matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,-100,0,0,1); opacity: 0; animation-timing-function: ease-in-out}
+  100% {transform: matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1); opacity: 1; }
+}
+
+@keyframes moveleft {
+  0% {transform: matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,100,0,0,1); opacity: 0; animation-timing-function: ease-in-out}
+  100% {transform: matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1); opacity: 1; }
+}
