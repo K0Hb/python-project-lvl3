@@ -95,7 +95,7 @@ def load_files(source: list) -> None:
     bar.finish()
 
 
-def is_local(element, url):
+def is_local(element, url: str) -> bool:
     link = element.get(TAGS[element.name])
     netloc_first = urlparse(url).netloc
     netloc_second = urlparse(urljoin(url, link)).netloc
@@ -112,12 +112,10 @@ def edit_links(page: str, url: str, path_to_folder_for_files: str) -> tuple:
     for element in elements:
         tag = TAGS[element.name]
         link = urljoin(url, element.get(tag))
-        if len(link.split('.')[-1]) >= 5:
-            resource_path = os.path.join(dir_name, name_formation(link))
-        else:
-            resource_path = os.path.join(dir_name,
-                                         name_formation(link, file=True))
+        resource_path = os.path.join(dir_name,
+                                     name_formation(link, file=True))
         element[tag] = resource_path
+        print(element[tag])
         result.append((link, os.path.join(dir_path, resource_path)))
         changed_page = soup.prettify("utf-8")
     return changed_page, result
