@@ -10,6 +10,9 @@ from urllib.parse import urlparse, urljoin
 from page_loader.args_parser import DEBUG, INFO, WARNING, ERROR, CRITICAL
 
 
+TAGS = {'link': 'href', 'img': 'src', 'script': 'src'}
+
+
 class KnownError(Exception):
     pass
 
@@ -82,35 +85,32 @@ def load_files(source: list) -> None:
     bar = IncrementalBar('Loading links', max=len(source))
     for link, path_to_extra_file in source:
         try:
-            r = requests.get(link)
+            r = requests.get(link, stream=True)
             r.raise_for_status()
-        except requests.exceptions.HTTPError as e:
+        except requests.exceptions.Exception as e:
             raise KnownError('Connection failed') from e
-        except requests.exceptions.ConnectionError as e:
-            raise KnownError('Connection error') from e
         data = r.content
         save_file(data, path_to_extra_file, mode='wb')
         bar.next()
     bar.finish()
 
 
+def is_local(element, url):
+    link = element.get(TAGS[element.name])
+    netloc_first = urlparse(url).netloc
+    netloc_second = urlparse(urljoin(url, link)).netloc
+    return netloc_first == netloc_second
+
+
 def edit_links(page: str, url: str, path_to_folder_for_files: str) -> tuple:
     logging.info('Edit links')
-    tags = {'link': 'href', 'img': 'src', 'script': 'src'}
     dir_path, dir_name = os.path.split(path_to_folder_for_files)
     soup = BeautifulSoup(page, 'html.parser')
+    elements = [element for element in soup.find_all(list(TAGS))
+                if is_local(element, url)]
     result = []
-
-    def is_local(element) -> bool:
-        link = element.get(tags[element.name])
-        netloc_first = urlparse(url).netloc
-        netloc_second = urlparse(urljoin(url, link)).netloc
-        return netloc_first == netloc_second
-
-    elements = filter(is_local,
-                      soup.find_all(list(tags)))
     for element in elements:
-        tag = tags[element.name]
+        tag = TAGS[element.name]
         link = urljoin(url, element.get(tag))
         if len(link.split('.')[-1]) >= 5:
             resource_path = os.path.join(dir_name, name_formation(link))
