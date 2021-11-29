@@ -87,11 +87,14 @@ def load_files(source: list) -> None:
         try:
             r = requests.get(link, stream=True)
             r.raise_for_status()
+        except requests.exceptions.HTTPError as e:
+            raise KnownError('Connection failed') from e
         except requests.exceptions.Exception as e:
             raise KnownError('Connection failed') from e
-        data = r.content
-        save_file(data, path_to_extra_file, mode='wb')
-        bar.next()
+        finally:
+            data = r.content
+            save_file(data, path_to_extra_file, mode='wb')
+            bar.next()
     bar.finish()
 
 
@@ -112,10 +115,12 @@ def edit_links(page: str, url: str, path_to_folder_for_files: str) -> tuple:
     for element in elements:
         tag = TAGS[element.name]
         link = urljoin(url, element.get(tag))
-        resource_path = os.path.join(dir_name,
-                                     name_formation(link, file=True))
+        if len(link.split('.')[-1]) >= 5:
+            resource_path = os.path.join(dir_name, name_formation(link))
+        else:
+            resource_path = os.path.join(dir_name,
+                                         name_formation(link, file=True))
         element[tag] = resource_path
-        print(element[tag])
         result.append((link, os.path.join(dir_path, resource_path)))
         changed_page = soup.prettify("utf-8")
     return changed_page, result
