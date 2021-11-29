@@ -116,7 +116,7 @@ def edit_links_to_local(page: str, url: str,
     for element in elements:
         tag = TAGS[element.name]
         link = urljoin(url, element.get(tag))
-        if os.path.splitext(link)[1] is None:
+        if os.path.splitext(link)[1] == '':
             resource_path = os.path.join(dir_name, formation_local_name(link))
         else:
             resource_path = os.path.join(dir_name,
