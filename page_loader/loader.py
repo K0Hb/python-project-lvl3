@@ -8,7 +8,7 @@ from progress.bar import IncrementalBar
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse, urljoin
 from page_loader.args_parser import DEBUG, INFO, WARNING, ERROR, CRITICAL
-
+from requests.exceptions import HTTPError as BaseHTTPError
 
 TAGS = {'link': 'href', 'img': 'src', 'script': 'src'}
 
@@ -87,9 +87,7 @@ def load_files(source: list) -> None:
         try:
             r = requests.get(link, stream=True)
             r.raise_for_status()
-        except requests.exceptions.HTTPError as e:
-            raise KnownError('Connection failed') from e
-        except requests.exceptions.Exception as e:
+        except BaseHTTPError as e:
             raise KnownError('Connection failed') from e
         else:
             data = r.content

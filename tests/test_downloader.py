@@ -70,6 +70,5 @@ def test_load_files() -> None:
      'unreal_path_to_file', 'Your folder is incorrect')
 ])
 def test_errors(URL: str, path: str, exception: str) -> None:
-    with pytest.raises(KnownError) as e_info:
+    with pytest.raises(KnownError):
         download(URL, path)
-    assert exception in str(e_info.value)
